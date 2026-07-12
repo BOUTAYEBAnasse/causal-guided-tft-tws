@@ -158,25 +158,6 @@ Following Eq. (24) of the paper, σ̄ is the mean over all 0.25° coarse cells a
 
 ---
 
-## Citation
-
-If you use this work, please cite (BibTeX will be finalized upon acceptance):
-
-```bibtex
-@inproceedings{boutayeb2026causal,
-  title     = {Causal-Guided Temporal Fusion Transformer for Downscaling
-               Terrestrial Water Storage data: Case of the Tensift River Basin, Morocco},
-  author    = {Boutayeb, Anasse and Lahsen-Cherif, Iyad and El Khadimi, Ahmed and Abbassi, Manal},
-  booktitle = {Proceedings of the Green MM Workshop, 34th ACM International Conference on Multimedia (ACM MM '26)},
-  year      = {2026},
-  address   = {Rio de Janeiro, Brazil},
-  publisher = {ACM},
-  note      = {Under review}
-}
-```
-
----
-
 ## Contact
 
 Anasse Boutayeb — `boutayebanasse@gmail.com`
