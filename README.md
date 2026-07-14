@@ -211,7 +211,5 @@ Potential extensions include:
 ## Contact
 
 **Anasse Boutayeb**  
-Institut National des Postes et des Télécommunications (INPT)  
-boutayebanasse@gmail.com
-Rabat, Morocco  
+Institut National des Postes et des Télécommunications (INPT) Rabat, Morocco
 Email: `boutayebanasse@gmail.com`
