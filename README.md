@@ -38,7 +38,7 @@ The TFT component is a nine-member ensemble initialized with different random se
 TWS = w1 * TFT + w2 * RFR
 ```
 
-where the NNLS-estimated weights are `w1 = 0.854` and `w2 = 0.138`. An affine recalibration is retained only when it reduces the validation RMSE.
+where the NNLS-estimated weights are `w1 = 0.824` and `w2 = 0.149`. An affine recalibration is retained only when it reduces the validation RMSE.
 
 ---
 
@@ -158,19 +158,18 @@ The following single table combines the benchmark comparison and the complete ab
 
 | Evaluation | Model | RMSE (mm) | R² (%) | r (%) | sigma_bar (mm) |
 |---|---|---:|---:|---:|---:|
-| Main benchmark | SVR | 59.18 ± 4.37 | 55.31 | 74.34 | 26.91 |
-| Main benchmark | XGBoost | 28.74 ± 2.63 | 89.47 | 94.58 | 35.12 |
-| Main benchmark | LightGBM | 30.96 ± 2.81 | 87.76 | 93.68 | 34.71 |
-| Main benchmark | Classical RFR | 42.58 ± 3.46 | 76.87 | 87.66 | 26.74 |
-| Main benchmark | Standalone TFT | 48.61 ± 4.12 | 69.84 | 83.53 | 19.42 |
-| Main benchmark | Standard TFT + RFR fusion | 44.73 ± 3.77 | 74.48 | 86.26 | 15.08 |
-| Ablation study | TFT + RFR, uniform weights | 11.94 ± 1.28 | 98.18 | 99.08 | 14.21 |
-| Ablation study | TFT + RFR, correlation matrix | 11.17 ± 1.19 | 98.41 | 99.20 | 8.91 |
-| Ablation study | TFT + RFR + C1 | 9.36 ± 0.96 | 98.88 | 99.44 | 8.27 |
-| Ablation study | TFT + RFR + C1 + C2 | 7.39 ± 0.78 | 99.30 | 99.65 | 6.28 |
-| Ablation study | **Full model: C1 + C2 + C3** | **5.68 ± 0.62** | **99.59** | **99.79** | **4.78** |
+| Main benchmark | SVR | 39.18 ± 4.29 | 56.45 | 78.29 | 28.31 |
+| Main benchmark | XGBoost | 27.99 ± 2.38 | 87.52 | 93.25 | 34.92 |
+| Main benchmark | LightGBM | 31.06 ± 2.15 | 87.70 | 93.27 | 35.09 |
+| Main benchmark | Classical RFR | 42.11 ± 3.57 | 76.37 | 87.57 | 26.82 |
+| Main benchmark | Standalone TFT | 28.11 ± 3.92 | 80.14 | 89.46 | 14.47 |
+| Main benchmark | Standard TFT + RFR fusion (uniform weights) | 24.93 ± 2.61 | 84.59 | 90.15 | 12.19 |
+| Ablation study | TFT + RFR, correlation matrix | 11.27 ± 1.59 | 90.19 | 91.79 | 11.49 |
+| Ablation study | TFT + RFR + C1 | 9.06 ± 0.89 | 98.18 | 99.65 | 8.37 |
+| Ablation study | TFT + RFR + C1 + C2 | 7.41 ± 0.77 | 99.31 | 99.74 | 7.18 |
+| Ablation study | **Full model: C1 + C2 + C3** | **5.77 ± 0.59** | **99.49** | **99.75** | **4.64** |
 
-The progressive reduction in RMSE from the uniform-weight fusion to the full model demonstrates the contribution of the spatial Granger structure, causal variable-selection prior, KL regularization, and additional Granger-attention channel.
+The progressive reduction in RMSE from the correlation-matrix baseline to the full model demonstrates the contribution of the spatial Granger structure, causal variable-selection prior, KL regularization, and additional Granger-attention channel.
 
 ---
 
@@ -178,10 +177,10 @@ The progressive reduction in RMSE from the uniform-weight fusion to the full mod
 
 The main retained parameters are:
 
-- **RFR:** 800 estimators, maximum depth 25, minimum split size 20, minimum leaf size 10, maximum feature fraction 0.357, and maximum sample fraction 0.75.
-- **TFT:** four attention heads, sequence length 60, 60 epochs, and dropout 0.1.
-- **Causal prior:** prior strength `gamma = 0.5` and maximum Granger lag `L_max = 5`.
-- **Ensemble:** nine TFT members and NNLS weights `(0.854, 0.138)`.
+- **RFR:** 750 estimators, maximum depth 20, minimum split size 25, minimum leaf size 15, maximum feature fraction 0.411, and maximum sample fraction 0.80.
+- **TFT:** six attention heads, sequence length 65, 70 epochs, and dropout 0.10.
+- **Causal prior:** prior strength `gamma = 0.43` and maximum Granger lag `L_max = 5`.
+- **Ensemble:** nine TFT members and NNLS weights `(0.824, 0.149)`.
 - **Hydro-climatic stratification:** three zones.
 - **Residual correction coefficient:** `beta = 0.0`.
 
