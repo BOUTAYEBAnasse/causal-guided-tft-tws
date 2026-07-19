@@ -10,7 +10,7 @@ Ce script suit la meme logique d'execution que SOTA_RFR.py :
   3) il evalue les performances sur le split chronologique test ;
   4) il exporte les cartes SR_TWS_YYYYMMDD.tif.
 
-Difference avec GRSL_v12.py / methode proposee
+Difference avec causal_tft_pipeline.py / methode proposee
 -----------------------------------------------
 Ici, le TFT est volontairement "standalone" :
   * pas de Granger ;
@@ -24,7 +24,7 @@ Ici, le TFT est volontairement "standalone" :
 
 Les sequences TFT contiennent seulement :
     [Pr_norm, NDVI_norm, 1 - ET_norm]
-avec Slope comme contexte statique du GRN final, comme dans GRSL_v12.py.
+avec Slope comme contexte statique du GRN final, comme dans causal_tft_pipeline.py.
 
 AJOUT : calcul de la variance sous-maille (sigma-bar) sur les cartes fines
 exportees (metrique de structure fine, sous-section "Sub-grid Variance").
@@ -36,7 +36,7 @@ Version CPU-friendly inscrite directement dans le fichier :
     ENSEMBLE_MEMBERS=3
 
 Placer ce fichier a cote de :
-    GRSL_v12.py
+    causal_tft_pipeline.py
     sota_common.py
     subgrid_common.py
 
@@ -57,7 +57,7 @@ os.environ.setdefault("TFT_EPOCHS", "15")
 os.environ.setdefault("ENSEMBLE_MEMBERS", "3")
 os.environ.setdefault("TFT_BATCH_SIZE", "64")
 
-import GRSL_v12 as base
+import causal_tft_pipeline as base
 import sota_common as sc
 import subgrid_common as sg
 
@@ -81,7 +81,7 @@ TFT_EPOCHS = _envi("TFT_EPOCHS", 15)
 ENSEMBLE_MEMBERS = _envi("ENSEMBLE_MEMBERS", 3)
 TFT_BATCH_SIZE = _envi("TFT_BATCH_SIZE", 64)
 
-# Propagation dans GRSL_v12.py, car on reutilise ses classes/fonctions TFT.
+# Propagation dans causal_tft_pipeline.py, car on reutilise ses classes/fonctions TFT.
 base.TFT_SEQ_LEN = TFT_SEQ_LEN
 base.TFT_MAX_EPOCHS = TFT_EPOCHS
 base.TFT_BATCH_SIZE = TFT_BATCH_SIZE
@@ -103,7 +103,7 @@ if getattr(base, "_HAS_TFT", False):
 class _ZeroRegressor:
     """Modele muet utilise seulement pour reutiliser export_downscaled_maps.
 
-    Dans l'export GRSL_v12, la fonction attend un RFR et des poids de fusion.
+    Dans l'export causal_tft_pipeline, la fonction attend un RFR et des poids de fusion.
     Ici, on donne w_TFT=1 et w_RFR=0 ; ce predicteur retourne donc zero et
     n'influence jamais la sortie.
     """
@@ -194,7 +194,7 @@ def export_tft_maps(model, tws_scaler, device, data, n_feat=3):
     """
     out_dir = base.os.path.join(base.OUT_DIR, "SOTA_TFT_MAPS")
 
-    # Masque clip Tensift identique a GRSL_v12.py.
+    # Masque clip Tensift identique a causal_tft_pipeline.py.
     clip_mask = base.build_clip_mask_from_shapefile(base.TENSIFT_SHP,
                                                    data["fine_profile"])
 

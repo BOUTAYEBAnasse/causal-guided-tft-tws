@@ -4,7 +4,7 @@ ABLATION_TFT_RFR_uniform.py
 ===========================
 Ligne 2 du Tableau 4 : TFT + RFR + uniform weight.
 
-Logique de donnees et d'export identique a GRSL_v12.py, mais C1, C2 et C3 sont
+Logique de donnees et d'export identique a causal_tft_pipeline.py, mais C1, C2 et C3 sont
 desactives et la fusion TFT/RFR est fixee a w1=w2=0.5, sans recalibration affine.
 
 AJOUT : calcul de la variance sous-maille (sigma-bar) sur les cartes fines
@@ -14,7 +14,7 @@ exportees (metrique de structure fine, sous-section "Sub-grid Variance").
 import os
 
 import ablation_common as ac
-import GRSL_v12 as base
+import causal_tft_pipeline as base
 import subgrid_common as sg
 
 

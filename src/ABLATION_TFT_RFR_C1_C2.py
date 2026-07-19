@@ -21,7 +21,7 @@ exportees (metrique de structure fine, sous-section "Sub-grid Variance").
 import os
 
 import ablation_common as ac
-import GRSL_v12 as base
+import causal_tft_pipeline as base
 import subgrid_common as sg
 
 

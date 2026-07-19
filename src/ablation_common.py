@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-
 """
-ablation_common.py (v3 — logique GRSL_v12 + CPU local)
+ablation_common.py (v3 — logique causal_tft_pipeline + CPU local)
 =======================================================
 Module partage pour l'etude d'ablation du papier.
 
 Cette version ne depend plus de ``sota_common.py`` : elle reutilise directement
-la chaine de donnees et les fonctions de ``GRSL_v12.py`` afin que les scripts
+la chaine de donnees et les fonctions de ``causal_tft_pipeline.py`` afin que les scripts
 ABLATION_TFT_RFR_uniform.py et ABLATION_TFT_RFR_corr.py s'executent dans le
 meme environnement que le pipeline principal.
 
-Correspondance avec GRSL_v12.py :
+Correspondance avec causal_tft_pipeline.py :
   * creation/lecture de name_files_GRSL_TWS.txt ;
   * API avec decay module par la pente [B4] ;
   * interpolation + cascade gap-fill NDVI/ET ;
@@ -20,7 +20,7 @@ Correspondance avec GRSL_v12.py :
   * RFR sur [Pr, NDVI, ET, Slope] ;
   * fusion NNLS ou uniforme ;
   * beta residuel optionnel et recalibration affine OLS optionnelle ;
-  * export des cartes via le meme clip Tensift + erosion que GRSL_v12.
+  * export des cartes via le meme clip Tensift + erosion que causal_tft_pipeline.
 
 Execution CPU :
   Par defaut, si CUDA est absent, le profil ``cpu`` est active :
@@ -53,11 +53,11 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_squared_error
 from scipy.optimize import nnls
 
-import GRSL_v12 as base
+import causal_tft_pipeline as base
 
 
 # =============================================================================
-# 0) PROFIL CPU / PAPER + PROPAGATION DANS GRSL_v12
+# 0) PROFIL CPU / PAPER + PROPAGATION DANS causal_tft_pipeline
 # =============================================================================
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 _ON_CPU = DEVICE.type == "cpu"
@@ -104,14 +104,14 @@ TFT_BATCH_SIZE = _envi("TFT_BATCH_SIZE", _P_BATCH)
 ENSEMBLE_MEMBERS = _envi("ENSEMBLE_MEMBERS", _P_ENSEMBLE)
 RFR_N_ESTIMATORS = _envi("RFR_N_ESTIMATORS", _P_RFR_EST)
 
-# Constantes scientifiques reprises de GRSL_v12 / papier.
+# Constantes scientifiques reprises de causal_tft_pipeline / papier.
 KL_LAMBDA_DEFAULT = _envf("KL_LAMBDA", getattr(base, "LAMBDA_GRANGER_DEFAULT", 0.01))
 CAUSAL_PRIOR_GAMMA = _envf("GAMMA_PRIOR", getattr(base, "GAMMA_GRANGER_PRIOR", 0.5))
 N_HYDROZONES = 3
-MATRIX_DATE_SOURCE = os.environ.get("MATRIX_DATE_SOURCE", "all").lower()  # all = comme GRSL_v12
+MATRIX_DATE_SOURCE = os.environ.get("MATRIX_DATE_SOURCE", "all").lower()  # all = comme causal_tft_pipeline
 TFT_LAMBDA_MODE = os.environ.get("TFT_LAMBDA_MODE", "fixed" if PROFILE == "cpu" else "grid").lower()
 
-# Forcer GRSL_v12 a utiliser le meme profil lorsque ses fonctions sont appelees.
+# Forcer causal_tft_pipeline a utiliser le meme profil lorsque ses fonctions sont appelees.
 base.TFT_SEQ_LEN = TFT_SEQ_LEN
 base.TFT_MAX_EPOCHS = TFT_EPOCHS
 base.TFT_BATCH_SIZE = TFT_BATCH_SIZE
@@ -150,10 +150,10 @@ class AblationConfig:
 
 
 # =============================================================================
-# 2) PREPARATION DES DONNEES — meme logique que GRSL_v12.main()
+# 2) PREPARATION DES DONNEES — meme logique que causal_tft_pipeline.main()
 # =============================================================================
 def prepare_data():
-    print("\n[DATA] Preparation identique a GRSL_v12.py ...")
+    print("\n[DATA] Preparation identique a causal_tft_pipeline.py ...")
     base.ensure_name_file()
 
     sections = base.parse_name_file(base.NAME_FILE)
@@ -313,7 +313,7 @@ def build_matrices_and_zones(data, cfg: AblationConfig):
 
     matrix_dates = data["dates_all"] if MATRIX_DATE_SOURCE == "all" else data["train_dates"]
 
-    print("[ZONES] Clustering hydro-climatique [B5] comme GRSL_v12...")
+    print("[ZONES] Clustering hydro-climatique [B5] comme causal_tft_pipeline...")
     labels_2d, _kmeans, _cluster_scaler, best_K = base.build_pixel_clusters(
         data["api_maps"], data["ndvi_maps"], data["et_maps"], data["fine_profile"],
         matrix_dates, k_range=base.K_RANGE, seed=base.CLUSTER_SEED,
@@ -349,7 +349,7 @@ def build_matrices_and_zones(data, cfg: AblationConfig):
 
 
 # =============================================================================
-# 4) SEQUENCES TFT — meme logique bassin-moyen que GRSL_v12.build_sequences()
+# 4) SEQUENCES TFT — meme logique bassin-moyen que causal_tft_pipeline.build_sequences()
 # =============================================================================
 def make_prior_vec(M_global, cfg: AblationConfig):
     n_feat = 4 if cfg.use_C3 else 3
@@ -749,7 +749,7 @@ def run_ablation(cfg: AblationConfig):
 
 
 # =============================================================================
-# 8) EXPORT DES CARTES — meme fonction que GRSL_v12
+# 8) EXPORT DES CARTES — meme fonction que causal_tft_pipeline
 # =============================================================================
 def export_fused_maps(result, out_subdir):
     data = result["data"]

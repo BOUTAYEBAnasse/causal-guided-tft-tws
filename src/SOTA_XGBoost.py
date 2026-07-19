@@ -5,7 +5,7 @@ SOTA_XGBoost.py — Modele de comparaison : XGBoost Regressor.
 CORRECTION : evaluation a 0.25 deg (protocole §5.1 du papier).
 
 Hyperparametres FIXES (aucune optimisation bayesienne), pour rester coherent
-avec l'approche adoptee (GRSL_v12), qui fixe elle aussi ses hyperparametres.
+avec l'approche adoptee (causal_tft_pipeline), qui fixe elle aussi ses hyperparametres.
 
 Protocole : memes features [Pr, NDVI, ET, Slope], meme split chronologique
 80/20, memes metriques (agregation 0.25 deg), meme export (clip Tensift +
@@ -15,10 +15,10 @@ AJOUT : calcul de la variance sous-maille (sigma-bar) sur les cartes fines
 exportees (metrique de structure fine, sous-section "Sub-grid Variance").
 
 Dependances : xgboost, scikit-learn.
-Placer ce fichier a cote de GRSL_v12.py, sota_common.py et subgrid_common.py.
+Placer ce fichier a cote de causal_tft_pipeline.py, sota_common.py et subgrid_common.py.
 """
 
-import GRSL_v12 as base
+import causal_tft_pipeline as base
 import sota_common as sc
 import subgrid_common as sg
 

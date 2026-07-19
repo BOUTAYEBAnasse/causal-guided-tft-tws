@@ -28,22 +28,22 @@ Cette version ajoute :
   * l'ancienne `report()` reste disponible pour retro-compatibilite mais un
     warning s'affiche : ne l'utilise plus pour le Tableau 3 du papier.
 
-Placer ce fichier dans le MEME repertoire que GRSL_v12.py.
+Placer ce fichier dans le MEME repertoire que causal_tft_pipeline.py.
 """
 
 import os
 import warnings
 import numpy as np
 
-# Import du pipeline de base. GRSL_v12.py doit etre dans le meme dossier.
-import GRSL_v12 as base
+# Import du pipeline de base. causal_tft_pipeline.py doit etre dans le meme dossier.
+import causal_tft_pipeline as base
 
 
 # =============================================================================
 # 1) CHARGEMENT + PREPARATION DES DONNEES (INCHANGE)
 # =============================================================================
 def prepare_data():
-    """Reproduit la phase de preparation de donnees de GRSL_v12.main(),
+    """Reproduit la phase de preparation de donnees de causal_tft_pipeline.main(),
     et renvoie tout ce qu'il faut pour entrainer/exporter un modele SOTA."""
     base.ensure_name_file()
     sections  = base.parse_name_file(base.NAME_FILE)

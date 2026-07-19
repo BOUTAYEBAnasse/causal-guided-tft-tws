@@ -5,7 +5,7 @@ SOTA_RFR.py — Modele de comparaison : Random Forest Regressor (baseline).
 CORRECTION : evaluation a 0.25 deg (protocole §5.1 du papier), au lieu de la
 comparaison pixel-a-pixel (qui gonflait artificiellement le RMSE des SOTA).
 
-Hyperparametres FIXES, identiques a ceux de l'approche adoptee (GRSL_v12,
+Hyperparametres FIXES, identiques a ceux de l'approche adoptee (causal_tft_pipeline,
 RFR_PARAMS) et au Tableau II du papier. AUCUNE optimisation bayesienne :
 l'approche adoptee n'en utilise pas non plus, donc pour une comparaison
 coherente les modeles SOTA emploient des hyperparametres fixes.
@@ -17,12 +17,12 @@ memes metriques (a 0.25 deg apres agregation).
 AJOUT : calcul de la variance sous-maille (sigma-bar) sur les cartes fines
 exportees (metrique de structure fine, sous-section "Sub-grid Variance").
 
-Placer ce fichier a cote de GRSL_v12.py, sota_common.py et subgrid_common.py.
+Placer ce fichier a cote de causal_tft_pipeline.py, sota_common.py et subgrid_common.py.
 """
 
 from sklearn.ensemble import RandomForestRegressor
 
-import GRSL_v12 as base
+import causal_tft_pipeline as base
 import sota_common as sc
 import subgrid_common as sg
 
@@ -39,7 +39,7 @@ def main():
     X_tr, y_tr = sc.build_xy(data["train_dates"], data)
     print(f" Echantillons train (0.05 deg) : {X_tr.shape}")
 
-    # Hyperparametres FIXES : exactement ceux de GRSL_v12 (Tableau II du papier).
+    # Hyperparametres FIXES : exactement ceux de causal_tft_pipeline (Tableau II du papier).
     print(f" Hyperparametres RFR (fixes) : {base.RFR_PARAMS} | "
           f"max_samples={base.RFR_MAX_SAMPLES}")
     model = RandomForestRegressor(

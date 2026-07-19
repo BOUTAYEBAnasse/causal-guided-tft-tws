@@ -4,7 +4,7 @@ ABLATION_TFT_RFR_corr.py
 ========================
 Ligne 3 du Tableau 4 : TFT + RFR + correlation matrix.
 
-Logique identique au pipeline GRSL_v12.py, sauf que la matrice de Granger
+Logique identique au pipeline causal_tft_pipeline.py, sauf que la matrice de Granger
 est remplacee par M_Corr = Corr(Pr_norm, NDVI_norm, 1-ET_norm).
 C1, C2 et C3 restent actives afin d'isoler uniquement la nature de la matrice.
 
@@ -15,7 +15,7 @@ exportees (metrique de structure fine, sous-section "Sub-grid Variance").
 import os
 
 import ablation_common as ac
-import GRSL_v12 as base
+import causal_tft_pipeline as base
 import subgrid_common as sg
 
 

@@ -28,21 +28,21 @@ le protocole d'evaluation (§5.1) : on lit la reference GLDAS 0.25 deg native
 (via tws_dict) pour recuperer son profil, on identifie a quelle cellule
 grossiere appartient chaque pixel fin, puis on calcule l'ecart-type des
 pixels fins predits a l'interieur de chaque cellule. On reutilise les
-fonctions de GRSL_v12.py (load_raster, to_float_with_nan, reproject_to_profile)
+fonctions de causal_tft_pipeline.py (load_raster, to_float_with_nan, reproject_to_profile)
 afin de ne rien reimplementer.
 
 Ce module ne calcule RIEN de nouveau cote modele : il lit uniquement les
 cartes fines SR_TWS_YYYYMMDD.tif deja exportees par chaque script, donc il
 n'exige aucun re-entrainement.
 
-Placer ce fichier a cote de GRSL_v12.py.
+Placer ce fichier a cote de causal_tft_pipeline.py.
 """
 
 import os
 import glob
 import numpy as np
 
-import GRSL_v12 as base
+import causal_tft_pipeline as base
 
 
 # Ratio grossier / fin : 0.25 / 0.05 = 5. Redefinissable si besoin.
