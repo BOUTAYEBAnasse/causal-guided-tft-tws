@@ -50,7 +50,7 @@ causal-guided-tft-tws/
 ├── assets/
 │   └── workflow.jpg
 ├── src/
-│   ├── GRSL_v12.py
+│   ├── causal_tft_pipeline.py
 │   ├── ABLATION_TFT_RFR_C1.py
 │   ├── ABLATION_TFT_RFR_C1_C2.py
 │   ├── ABLATION_TFT_RFR_corr.py
@@ -64,7 +64,7 @@ causal-guided-tft-tws/
 │   ├── sota_common.py
 │   └── subgrid_common.py
 └── notebooks/
-    ├── GRSL_v12.ipynb
+    ├── causal_tft_pipeline.ipynb
     ├── ABLATION_TFT_RFR_C1.ipynb
     ├── ABLATION_TFT_RFR_C1_C2.ipynb
     ├── ABLATION_TFT_RFR_corr.ipynb
@@ -105,6 +105,12 @@ Project_Tensift/
 ```
 
 The shapefile must be accompanied by its associated `.shx`, `.dbf`, and `.prj` files.
+
+The complete `Project_Tensift/` dataset used in the experiments is available for download here:
+
+**[Project_Tensift on Google Drive](https://drive.google.com/drive/folders/1BIpTpqD66pR7GgpUrjnprAMUxi5IseqR?usp=sharing)**
+
+After downloading, place the folder in your working directory and set `DATA_ROOT` to its parent directory so that the notebooks can locate `Project_Tensift/`.
 
 ---
 
